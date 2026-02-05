@@ -1,34 +1,18 @@
 pipeline {
     agent any
-
     environment {
-        IMAGE_NAME = "docker-helloworld"
+        IMAGE_NAME = 'docker-helloworld:latest'
     }
-
     stages {
-
         stage('Build Docker Image') {
             steps {
-                echo "Building Docker Image..."
-                sh 'docker build -t %IMAGE_NAME% .'
+                sh 'docker build -t $IMAGE_NAME .'
             }
         }
-
         stage('Run Container Test') {
             steps {
-                echo "Running Docker Container..."
-                sh 'docker run %IMAGE_NAME%'
+                sh 'docker run --rm $IMAGE_NAME'
             }
-        }
-
-    }
-
-    post {
-        success {
-            echo 'Pipeline completed successfully!'
-        }
-        failure {
-            echo 'Pipeline failed!'
         }
     }
 }
